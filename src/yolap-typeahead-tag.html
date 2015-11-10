@@ -36,16 +36,16 @@
 	      border-bottom: solid 1px;
 	    }
 	</style>
-  <template>
-    <div class="input">
-      <input type="text" id="input" value='' placeholder='Input search query' on-input='valueHandle'>
-      <div class="suggest">
-        <template is='dom-repeat' items='{{suggest}}'>
-          <div on-click='select'>{{item.name}}</div>
-        </template>
-      </div>
-    </div>
-  </template>
+	<template>
+		<div class="input">
+		  <input type="text" id="input" value='' placeholder='Input search query' on-input='valueHandle'>
+		  <div class="suggest">
+		    <template is='dom-repeat' items='{{suggest}}'>
+		      <div on-click='select'>{{item.name}}</div>
+		    </template>
+		  </div>
+		</div>
+	</template>
 </dom-module>
 
 <script>
