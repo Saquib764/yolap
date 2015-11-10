@@ -1,10 +1,10 @@
 <script type="text/javascript">
-var ViewTagBehavior;
-var InputTagBehavior;
+var ViewYolapBehavior;
+var InputYolapBehavior;
 (function(){
 	var views = [];
 
-	ViewTagBehavior = {
+	ViewYolapBehavior = {
 		hostAttributes: {
 			from: 'tag1',
 		},
@@ -14,11 +14,11 @@ var InputTagBehavior;
 	    properties: {
 	    	tags: {
 	    		type: Object,
-	    		value: []
+	    		value: [],
 	    	},
 	    	empty: {
 	    		type: Boolean,
-	    		value: true
+	    		value: true,
 	    	}
 	    },
 	    created: function(){
@@ -42,7 +42,7 @@ var InputTagBehavior;
 		}
 	}
 
-	InputTagBehavior = {
+	InputYolapBehavior = {
 	    hostAttributes: {
 	    	key: 'name',
 	    	filters: 'null',

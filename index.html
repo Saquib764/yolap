@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang='en'>
     <head>
-        <title>Dna-tags</title>
+        <title>Yolap</title>
         <meta charset="UTF-8">
         <meta name="author" content="Md Saquib Alam">
 
@@ -25,16 +25,16 @@
 
     <body class="fullbleed layout vertical" onload="run()">
         <div>
-            <dna-tags-view from='in1'></dna-tags-view>
-            <dna-tags id='in1' key='names'></dna-tags>
-            <dna-tags-view from='in'></dna-tags-view>
-            <dna-tags-clickadd id='in' key='names' filters='null'></dna-tags-clickadd>
+            <yolap-view-tags from='in1'></yolap-view-tags>
+            <yolap-typeahead-tag id='in1' key='names'></yolap-typeahead-tag>
+            <yolap-view-tags from='in'></yolap-view-tags>
+            <yolap-click-addtag id='in' key='names' filters='null'></yolap-click-addtag>
         </div>
     </body>
 
     <!-- Import all third party plugin here -->
 
-    <link rel="import" href="/src/dna-tags.html">
+    <link rel="import" href="/src/yolap.html">
     <script src="/bower_components/webcomponentsjs/webcomponents.min.js"></script>
     <script type="text/javascript">
     var run = function(){

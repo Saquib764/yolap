@@ -1,5 +1,7 @@
+<link rel="import" href="../bower_components/polymer/polymer.html">
+<link rel="import" href="./yolap-behaviors.html">
 
-<dom-module id="dna-tags-clickadd">
+<dom-module id="yolap-typeahead-tag">
 	<style>
 	    :host {
 	      position: relative;
@@ -8,6 +10,7 @@
 	    :host .input{
 	      position: relative;
 	      height: 30px;
+	      width: 150px;
 	    }
 	    :host .input>input{
 	      width: inherit;
@@ -16,24 +19,26 @@
 	    :host .input>.suggest{
 	      width: inherit;
 	      position: relative;
-	      display: inline-flex;
+	      z-index: 100;
+	      display: table-caption;
+	      max-height: 300px;
+	      overflow-y: scroll;
+	      overflow-x: hidden;
 	    }
 	    :host .input>.suggest>div{
-	      background-color: rgba(200,200,200,1);
+	      background-color: grey;
 	      width: inherit;
-	      margin: 2px 5px;
-	      padding: 3px 5px;
-	      margin-left: 0px;
-	      border: solid 1px rgba(100,100,100,1);
+	      padding-left: 10px;
 	    }
 	    :host .input>.suggest>div:hover{
-	      cursor: copy;
-	      background-color: rgba(100,200,200,1);
+	      cursor: pointer;
+	      border-top: solid 1px;
+	      border-bottom: solid 1px;
 	    }
 	</style>
   <template>
     <div class="input">
-      <!-- <input type="text" id="input" value='' placeholder='Input search query' on-input='valueHandle'> -->
+      <input type="text" id="input" value='' placeholder='Input search query' on-input='valueHandle'>
       <div class="suggest">
         <template is='dom-repeat' items='{{suggest}}'>
           <div on-click='select'>{{item.name}}</div>
@@ -46,8 +51,10 @@
 <script>
 
 Polymer({
-	is: 'dna-tags-clickadd',
-	behaviors: [InputTagBehavior],
+	is: 'yolap-typeahead-tag',
+	behaviors: [InputYolapBehavior],
+	valueHandle: function(){
+	  this.query = this.$.input.value;
+	},
 });
-
 </script>
