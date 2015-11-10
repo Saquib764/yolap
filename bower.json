@@ -1,13 +1,18 @@
 {
-  "name": "dna-tags",
-  "description": "input tags",
-  "main": "",
+  "name": "yolap",
+  "description": "tags input typeahead type ahead",
+  "main": "yolap.html",
   "moduleType": [
-    "globals",
-    "node"
+    "es6",
+    "globals"
   ],
   "keywords": [
-    "Polymer"
+    "Polymer",
+    "tags",
+    "input",
+    "type",
+    "ahead",
+    "typeahead"
   ],
   "authors": [
     "Saquib Alam"
@@ -16,6 +21,5 @@
     "polymer": "Polymer/polymer#1.0.0"
   },
   "license": "MIT",
-  "homepage": "",
-  "private": true
+  "homepage": "https://github.com/Saquib764/yolap"
 }
