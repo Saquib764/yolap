@@ -1,0 +1,60 @@
+<link rel="import" href="../bower_components/polymer/polymer.html">
+<link rel="import" href="./dna-tags-behaviors.html">
+
+<dom-module id="dna-tags">
+	<style>
+	    :host {
+	      position: relative;
+	      width: 100px;
+	    }
+	    :host .input{
+	      position: relative;
+	      height: 30px;
+	      width: 150px;
+	    }
+	    :host .input>input{
+	      width: inherit;
+	      height: inherit;
+	    }
+	    :host .input>.suggest{
+	      width: inherit;
+	      position: relative;
+	      z-index: 100;
+	      display: table-caption;
+	      max-height: 300px;
+	      overflow-y: scroll;
+	      overflow-x: hidden;
+	    }
+	    :host .input>.suggest>div{
+	      background-color: grey;
+	      width: inherit;
+	      padding-left: 10px;
+	    }
+	    :host .input>.suggest>div:hover{
+	      cursor: pointer;
+	      border-top: solid 1px;
+	      border-bottom: solid 1px;
+	    }
+	</style>
+  <template>
+    <div class="input">
+      <input type="text" id="input" value='' placeholder='Input search query' on-input='valueHandle'>
+      <div class="suggest">
+        <template is='dom-repeat' items='{{suggest}}'>
+          <div on-click='select'>{{item.name}}</div>
+        </template>
+      </div>
+    </div>
+  </template>
+</dom-module>
+
+<script>
+
+Polymer({
+	is: 'dna-tags',
+	behaviors: [InputTagBehavior],
+	valueHandle: function(){
+	  this.query = this.$.input.value;
+	},
+});
+</script>

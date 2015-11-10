@@ -1,0 +1,21 @@
+{
+  "name": "dna-tags",
+  "description": "input tags",
+  "main": "",
+  "moduleType": [
+    "globals",
+    "node"
+  ],
+  "keywords": [
+    "Polymer"
+  ],
+  "authors": [
+    "Saquib Alam"
+  ],
+  "dependencies": {
+    "polymer": "Polymer/polymer#1.0.0"
+  },
+  "license": "MIT",
+  "homepage": "",
+  "private": true
+}

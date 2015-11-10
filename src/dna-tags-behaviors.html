@@ -1,0 +1,170 @@
+<script type="text/javascript">
+var ViewTagBehavior;
+var InputTagBehavior;
+(function(){
+	var views = [];
+
+	ViewTagBehavior = {
+		hostAttributes: {
+			from: 'tag1',
+		},
+	    listeners: {
+	    	'tag-change': '_tagChange'
+	    },
+	    properties: {
+	    	tags: {
+	    		type: Object,
+	    		value: []
+	    	},
+	    	empty: {
+	    		type: Boolean,
+	    		value: true
+	    	}
+	    },
+	    created: function(){
+	    	views.push(this);
+	    },
+	    unselect: function(e){
+	    	e.model.item.selected = false;
+
+			var id = this.getAttribute('from');
+			var source = document.querySelector('#'+id);
+	    	source.fire('untagged', e.model.item);
+	    },
+		_tagChange: function(e){
+			var id = this.getAttribute('from');
+			var source = document.querySelector('#'+id);
+			this.tags = source.getTags();
+			if(this.tags.length == 0)
+				this.empty = true;
+			else
+				this.empty = false
+		}
+	}
+
+	InputTagBehavior = {
+	    hostAttributes: {
+	    	key: 'name',
+	    	filters: 'null',
+	    	id: 'tag1'
+	    },
+	    properties: {
+	      tags : {
+	        type: Object,
+	        value: [],
+	      },
+	      suggest : {
+	        type: Object,
+	        value: [],
+	      },
+	      query: {
+	        type: String,
+	        observer: '_getSuggest'
+	      },
+	      data: {
+	      	type: Object,
+	      	value: [],
+	      	observer: '_setStock'
+	      },
+	      _filters: {
+	      	type: Object,
+	      },
+	      stock: {
+	        type: Object,
+	        value:[]
+	      }
+	    },
+	    created: function(){
+	    	if(!this.getAttribute('key'))
+	    		this.setAttribute('key', 'name')
+
+	    	this._filters = {
+	    		'null': false,
+	    	}
+	    	var self = this;
+
+	    	if(this.getAttribute('filters')){
+		    	var filters = this.getAttribute('filters').replace(/ /g,'').split('|');
+		    	console.log(filters)
+		    	filters.forEach(function(filter){
+			    	self._filters[filter] = true;
+
+		    	})
+		    }
+	    },
+	    _setStock: function(){
+	    	var stock = [];
+	    	var data = this.data;
+	    	var key = this.getAttribute('key');
+	    	for(i=0; i<data.length; i++){
+	    		stock.push(data[i]);
+	    		stock[i].selected = false;
+	    		if(stock[i][key])
+	    			stock[i].name = stock[i][key]
+	    	}
+	    	this.stock = stock;
+	    	this._getSuggest();
+	    },
+	    _getSuggest: function(){
+	    	this.suggest = this.getSuggest()
+	    },
+	    getSuggest: function(){
+	      var suggest = [];
+	    	var key = this.getAttribute('key');
+	      var self = this;
+	      if(this._filters.null|| this.query){
+	        var patt = new RegExp(this.query, 'i')
+	        this.stock.forEach(function(str){
+	          if(patt.test(str[key]) && !str.selected){
+	            suggest.push(str)
+	          }
+	        });
+	      }
+	      return suggest;
+	    },
+	    getTags: function(){
+	    	var tags = [];
+	    	this.stock.forEach(function(str){
+	    		if(str.selected)
+	    			tags.push(str)
+	    	})
+	    	return tags;
+	    },
+	    select: function(e){
+	    	e.model.item.selected = true;
+	    	this.fire('tagged', e.model.item);
+	    	// this.Fire('tagged', e.model.item);
+	    },
+	    listeners: {
+	    	'tagged': '_tagged',
+	    	'untagged': '_untagged',
+	    	'tag-change': '_tagChange'
+	    },
+	    _untagged: function(e){
+	    	this.fire('tag-change', e.detail)
+	    },
+	    _tagged: function(e){
+	    	this.fire('tag-change', e.detail)
+	    },
+	    _tagChange: function(e){
+	    	this.suggest = this.getSuggest();
+	    	this.tags = this.getTags();
+	    	this.Fire(e.detail)
+	    },
+	    on: function(eventname, callback){
+	    	this.addEventListener(eventname, callback)
+	    },
+	    Fire: function(data){
+	    	// this.fire(events, data);
+	    	var id = this.getAttribute('id');
+	    	views.forEach(function(view){
+	    		var from = view.getAttribute('from');
+	    		if(from == id){
+	    			view.fire('tag-change', data);
+	    		}
+	    	})
+	    }
+	}
+})();
+
+</script>
