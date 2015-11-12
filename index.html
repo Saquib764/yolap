@@ -32,16 +32,25 @@
 </code></pre>
 
 <ol>
-<li><p>Import <code>yolap.html</code> to import all Yolap Polymer elements.</p></li>
-<li><p>Attributes
-All Yolap elements share few common attributes, <code>key, filters</code></p></li>
+<li>Import <code>yolap.html</code> to import all Yolap Polymer elements.</li>
 </ol>
 
 <h1>
-<a id="list-of-yolap-polymer-elements" class="anchor" href="#list-of-yolap-polymer-elements" aria-hidden="true"><span class="octicon octicon-link"></span></a>List of Yolap Polymer elements</h1>
+<a id="basics" class="anchor" href="#basics" aria-hidden="true"><span class="octicon octicon-link"></span></a>Basics</h1>
+
+<p>Yolap have two categories of elements, i.e <code>tag viewers and removers</code> and <code>tag creators</code>.</p>
 
 <ol>
-<li>yolap-click-addtag</li>
+<li>Tag viewers and removers.
+Every tags views have a unique tag creator linked with it. It gets all added tags from it and displays. You can remove tags via remove action. Example:</li>
+</ol>
+
+<pre lang="script"><code>&lt;yolap-view-tags icon='close' from='&lt;some creators id&gt;'&gt;&lt;/yolap-view-tags&gt;
+</code></pre>
+
+<ol>
+<li>Tag creators
+These elemnents need an array of items from which tags will be selected. It takes a query as input and display a list of matched item. It have a filter attribute that allows control over match with input query. Example: </li>
 </ol>
 
 <pre lang="script"><code>&lt;yolap-click-addtag id='in' filters='null'&gt;&lt;/yolap-click-addtag&gt;
