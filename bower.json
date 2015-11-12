@@ -12,13 +12,15 @@
     "input",
     "type",
     "ahead",
-    "typeahead"
+    "typeahead",
+    "web-components"
   ],
   "authors": [
     "Saquib Alam"
   ],
   "dependencies": {
-    "polymer": "Polymer/polymer#1.0.0"
+    "polymer": "Polymer/polymer#1.0.0",
+    "paper-icon-button": "PolymerElements/paper-icon-button#~1.0.5"
   },
   "license": "MIT",
   "homepage": "https://github.com/Saquib764/yolap"

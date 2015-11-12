@@ -1,53 +1,51 @@
+<link rel="import" href="../polymer/polymer.html">
+<link rel="import" href="./yolap-behaviors.html">
+
+<link rel="import" href="../iron-icons/iron-icons.html">
+<link rel="import" href="../iron-icon/iron-icon.html">
 
 <dom-module id="yolap-click-addtag">
 	<style>
-	    :host {
+	    :host{
 	      position: relative;
-	      width: 100px;
+	      display: inline-block;
+	      height: auto;
+	      width: 100%;
 	    }
-	    :host .input{
-	      position: relative;
-	      height: 30px;
-	    }
-	    :host .input>input{
-	      width: inherit;
+	    :host .suggest{
 	      height: inherit;
-	    }
-	    :host .input>.suggest{
-	      width: inherit;
-	      position: relative;
-	      display: inline-flex;
-	    }
-	    :host .input>.suggest>div{
-	      background-color: rgba(200,200,200,1);
-	      width: inherit;
-	      margin: 2px 5px;
-	      padding: 3px 5px;
-	      margin-left: 0px;
-	      border: solid 1px rgba(100,100,100,1);
-	    }
-	    :host .input>.suggest>div:hover{
-	      cursor: copy;
-	      background-color: rgba(100,200,200,1);
+	      display: inline-block;
+	      width: auto;
+	      background: rgba(230,230,230,1);
+	      padding: 2px 5px;
+	      margin: 3px 1px;
+	      border: solid 1px rgba(150,150,150,1);
+		  cursor: pointer;
 	    }
 	</style>
-  <template>
-    <div class="input">
+	<template>
       <!-- <input type="text" id="input" value='' placeholder='Input search query' on-input='valueHandle'> -->
-      <div class="suggest">
         <template is='dom-repeat' items='{{suggest}}'>
-          <div on-click='select'>{{item.name}}</div>
+	    	<div class="suggest" on-click='select'>
+	        	<span>{{item.name}}</span>
+	        	<template is='dom-if' if='{{icon}}'>
+	        		<iron-icon icon="{{icon}}"></iron-icon>
+	        	</template>
+	    	</div>
         </template>
-      </div>
-    </div>
-  </template>
+	</template>
 </dom-module>
 
 <script>
 
 Polymer({
 	is: 'yolap-click-addtag',
-	behaviors: [InputYolapBehavior],
+	properties: {
+		icon: {
+			type: String,
+		}
+	},
+	behaviors: [InputYolapBehavior, TypeaheadYolapBehavior],
 });
 
 </script>

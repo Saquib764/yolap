@@ -1,6 +1,7 @@
 <script type="text/javascript">
 var ViewYolapBehavior;
 var InputYolapBehavior;
+var TypeaheadYolapBehavior;
 (function(){
 	var views = [];
 
@@ -42,37 +43,36 @@ var InputYolapBehavior;
 		}
 	}
 
-	InputYolapBehavior = {
+	TypeaheadYolapBehavior = {
 	    hostAttributes: {
 	    	key: 'name',
 	    	filters: 'null',
 	    	id: 'tag1'
 	    },
 	    properties: {
-	      tags : {
-	        type: Object,
-	        value: [],
-	      },
-	      suggest : {
-	        type: Object,
-	        value: [],
-	      },
-	      query: {
-	        type: String,
-	        observer: '_getSuggest'
-	      },
-	      data: {
-	      	type: Object,
-	      	value: [],
-	      	observer: '_setStock'
-	      },
-	      _filters: {
-	      	type: Object,
-	      },
-	      stock: {
-	        type: Object,
-	        value:[]
-	      }
+			suggest : {
+				type: Object,
+				value: [],
+			},
+			query: {
+				type: String,
+				observer: '_getSuggest'
+			},
+			data: {
+				type: Object,
+				value: [],
+				observer: '_setStock'
+			},
+			_filters: {
+				type: Object,
+			},
+			stock: {
+				type: Object,
+				value:[]
+			},
+			active: {
+				type: Number,
+			}
 	    },
 	    created: function(){
 	    	if(!this.getAttribute('key'))
@@ -85,7 +85,6 @@ var InputYolapBehavior;
 
 	    	if(this.getAttribute('filters')){
 		    	var filters = this.getAttribute('filters').replace(/ /g,'').split('|');
-		    	console.log(filters)
 		    	filters.forEach(function(filter){
 			    	self._filters[filter] = true;
 
@@ -100,13 +99,14 @@ var InputYolapBehavior;
 	    		stock.push(data[i]);
 	    		stock[i].selected = false;
 	    		if(stock[i][key])
-	    			stock[i].name = stock[i][key]
+	    			stock[i].name = stock[i][key];
+	    		// formatting url
 	    	}
 	    	this.stock = stock;
 	    	this._getSuggest();
 	    },
 	    _getSuggest: function(){
-	    	this.suggest = this.getSuggest()
+	    	this.suggest = this.getSuggest();
 	    },
 	    getSuggest: function(){
 	      var suggest = [];
@@ -120,8 +120,53 @@ var InputYolapBehavior;
 	          }
 	        });
 	      }
+	    	this.fire('refresh-suggest')
 	      return suggest;
 	    },
+		listeners: {
+			'refresh-suggest': '_resetActive',
+			'keydown': '_activate'
+		},
+		_activate: function(e){
+			var children = this.$.suggestions.children;
+			if(e.keyCode == 40 || e.keyCode == 38){
+				var from = null;
+				if(this.active==undefined)
+					this.active = 0;
+				else{
+					from = children[this.active]
+					this.active+= (e.keyCode-39);
+					if(this.active >=children.length-1)
+						this.active = 0;
+					if(this.active<0)
+						this.active = children.length-2;
+				}
+				this.classFollows('active',children[this.active], from);
+			}
+			if(e.keyCode == 13){
+				if(this.active != null){
+					children[this.active].click();
+				}
+			}
+		},
+		_resetActive: function(){
+			this.active = undefined;
+			var act = document.querySelector('.active');
+			if(act!=null)
+				this.toggleClass('active', false, act)
+		},
+	    on: function(eventname, callback){
+	    	this.addEventListener(eventname, callback)
+	    },
+	};
+
+	InputYolapBehavior = {
+		properties:{
+			tags : {
+				type: Object,
+				value: [],
+			},
+		},
 	    getTags: function(){
 	    	var tags = [];
 	    	this.stock.forEach(function(str){
@@ -133,7 +178,6 @@ var InputYolapBehavior;
 	    select: function(e){
 	    	e.model.item.selected = true;
 	    	this.fire('tagged', e.model.item);
-	    	// this.Fire('tagged', e.model.item);
 	    },
 	    listeners: {
 	    	'tagged': '_tagged',
@@ -150,9 +194,6 @@ var InputYolapBehavior;
 	    	this.suggest = this.getSuggest();
 	    	this.tags = this.getTags();
 	    	this.Fire(e.detail)
-	    },
-	    on: function(eventname, callback){
-	    	this.addEventListener(eventname, callback)
 	    },
 	    Fire: function(data){
 	    	// this.fire(events, data);

@@ -25,10 +25,13 @@
  
     <body class="fullbleed layout vertical" onload="run()">
         <div>
-            <yolap-view-tags from='in1'></yolap-view-tags>
-            <yolap-typeahead-tag id='in1' key='names'></yolap-typeahead-tag>
-            <yolap-view-tags from='in'></yolap-view-tags>
-            <yolap-click-addtag id='in' key='names' filters='null'></yolap-click-addtag>
+            <yolap-view-tags icon='close' from='in1'></yolap-view-tags>
+            <yolap-typeahead-tag icon='add' id='in1' key='names'></yolap-typeahead-tag>
+
+            <yolap-view-tags icon='close' from='in'></yolap-view-tags>
+            <yolap-click-addtag icon='add' id='in' key='names' filters='null'></yolap-click-addtag>
+
+            <yolap-typeahead-url icon='add' id='url' filters='null'></yolap-typeahead-url>
         </div>
     </body>
 
@@ -45,6 +48,7 @@
         },{
             names: 'Maharastra'
         }]
+        
         stock1 = [{
             names: 'India'
         },{
@@ -54,6 +58,19 @@
         }]
           document.querySelector('#in').data = stock;
           document.querySelector('#in1').data = stock1;
+
+          url = [{
+            name: 'Google India',
+            url: 'www.google.co.in'
+          },{
+            name: 'Google',
+            url: 'www.google.com'
+          },{
+            name: 'Yahoo',
+            url: 'www.yahoo.co.in'
+          }]
+
+          document.querySelector('#url').data = url;
       }
 
     </script>

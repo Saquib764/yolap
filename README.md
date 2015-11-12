@@ -8,11 +8,18 @@ bower install yolap
 ```
 2. Import `yolap.html` to import all Yolap Polymer elements.
 
-3. Attributes
-All Yolap elements share few common attributes, `key, filters`
+# Basics
+Yolap have two categories of elements, i.e `tag viewers and removers` and `tag creators`.
 
-# List of Yolap Polymer elements
-1. yolap-click-addtag
+1. Tag viewers and removers.
+Every tags views have a unique tag creator linked with it. It gets all added tags from it and displays. You can remove tags via remove action. Example:
+```script
+<yolap-view-tags icon='close' from='<some creators id>'></yolap-view-tags>
+```
+
+2. Tag creators
+These elemnents need an array of items from which tags will be selected. It takes a query as input and display a list of matched item. It have a filter attribute that allows control over match with input query. Example: 
+
 ```script
 <yolap-click-addtag id='in' filters='null'></yolap-click-addtag>
 ```
@@ -27,3 +34,4 @@ document.querySelector('#in').data = [{
             name: 'Maharastra'
         }]
 ```
+

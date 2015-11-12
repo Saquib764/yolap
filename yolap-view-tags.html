@@ -1,4 +1,8 @@
+<link rel="import" href="../polymer/polymer.html">
+<link rel="import" href="./yolap-behaviors.html">
 
+<link rel="import" href="../iron-icons/iron-icons.html">
+<link rel="import" href="../iron-icon/iron-icon.html">
 
 <dom-module id='yolap-view-tags'>
 <style>
@@ -16,45 +20,17 @@
       padding: 2px 5px;
       margin: 3px 1px;
       border: solid 1px rgba(150,150,150,1);
+      cursor: pointer;
     }
-    :host #cross {
-	   width: 12px;
-	   height: 12px;
-	   position: relative;
-	   display: inline-block;
-	   cursor: pointer;
-	  transform:rotate(45deg);
-	-ms-transform:rotate(45deg); /* IE 9 */
-	-webkit-transform:rotate(45deg); /* Safari and Chrome */
-	}
-
-	:host #cross:before, #cross:after {
-	  content: "";
-	  position: absolute;
-	  z-index: -1;
-	  background: rgba(82,14,14,1);
-	}
-
-	:host #cross:before {
-	  left: 50%;
-	  width: 20%;
-	  margin-left: -10%;
-	  height: 100%;
-	}
-
-	:host #cross:after {
-	  top: 50%;
-	  height: 20%;
-	  margin-top: -10%;
-	  width: 100%;
-	}
 </style>
 <template>
 	<template is='dom-if' if='{{!empty}}'>
       <template is='dom-repeat' items='{{tags}}'>
-        <div class="tag">
+        <div class="tag" on-click='unselect'>
         	<span>{{item.name}}</span>
-        	<div on-click='unselect' id="cross"></div>
+        	<template is='dom-if' if='{{icon}}'>
+        		<iron-icon icon="{{icon}}"></iron-icon>
+        	</template>
         </div>
       </template>
      </template>
@@ -65,6 +41,11 @@
  
 Polymer({
 	is: 'yolap-view-tags',
+	properties: {
+		icon: {
+			type: String,
+		}
+	},
 	behaviors: [ViewYolapBehavior],
 });
 
